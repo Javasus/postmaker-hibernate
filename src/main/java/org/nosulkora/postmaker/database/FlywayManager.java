@@ -27,8 +27,6 @@ public class FlywayManager {
         System.out.println("Запуск миграций базы данных...");
         MigrateResult result = flyway.migrate();
         System.out.println("Миграции успешно выполнены");
-        System.out.println("Применено миграций: " + result.migrationsExecuted);
-
         logAppliedMigrations();
     }
 
