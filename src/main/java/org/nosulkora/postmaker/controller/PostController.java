@@ -1,6 +1,5 @@
 package org.nosulkora.postmaker.controller;
 
-import org.nosulkora.postmaker.exceptions.RepositoryException;
 import org.nosulkora.postmaker.model.Label;
 import org.nosulkora.postmaker.model.Post;
 import org.nosulkora.postmaker.model.Status;
@@ -38,11 +37,11 @@ public class PostController {
         return null;
     }
 
-    public Post getPostById(Long id) throws RepositoryException {
+    public Post getPostById(Long id) {
         return postRepository.getById(id);
     }
 
-    public List<Post> getAllPosts() throws RepositoryException {
+    public List<Post> getAllPosts() {
         return postRepository.getAll();
     }
 
@@ -57,7 +56,7 @@ public class PostController {
         return null;
     }
 
-    public boolean deletePost(Long id) throws RepositoryException {
+    public boolean deletePost(Long id) {
         return postRepository.deleteById(id);
     }
 }

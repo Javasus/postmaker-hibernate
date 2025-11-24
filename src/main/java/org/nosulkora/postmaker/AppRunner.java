@@ -14,7 +14,6 @@ public class AppRunner {
             // Выполняем миграции
             FlywayManager.runMigrations();
 
-
             // Запускаем приложение
             MainView mainView = new MainView();
             mainView.start();
