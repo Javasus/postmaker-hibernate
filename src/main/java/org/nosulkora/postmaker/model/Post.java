@@ -20,8 +20,10 @@ public class Post {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-    cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+@ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
+)
     @JoinTable(
             name = "post_labels",
             schema = "postmaker",
@@ -94,8 +96,8 @@ public class Post {
         return "Post{" +
                "id=" + id +
                ", title='" + title + '\'' +
-               ", content='" + content + '\'' +
-               ", labels=" + labels +
+               ", content='" + (content != null ? content.substring(0, Math.min(50, content.length())) : "") + "...'" +
+               ", labelsCount=" + (labels != null ? labels.size() : 0) +
                ", status=" + status +
                ", writer=" + writerId +
                '}';
