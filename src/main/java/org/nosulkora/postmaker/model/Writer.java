@@ -21,7 +21,11 @@ public class Writer {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "writerId", fetch = FetchType.EAGER)
+    @OneToMany(
+            mappedBy = "writerId",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}
+    )
     @BatchSize(size = 10)
     private List<Post> posts;
 
@@ -78,7 +82,7 @@ public class Writer {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", posts=" + posts +
+                ", postsCount=" + (posts != null ? posts.size() : 0) +
                 ", status=" + status +
                 '}';
     }

@@ -12,14 +12,16 @@ public class DatabaseManager {
 
     static {
         try {
-            // Используем конфигурацию из hibernate.cfg.xml
-            sessionFactory = new Configuration()
-                    .configure("hibernate.cfg.xml")
-                    .addAnnotatedClass(Writer.class)
-                    .addAnnotatedClass(Post.class)
-                    .addAnnotatedClass(Label.class)
-                    .buildSessionFactory();
+            // Загружаем конфигурацию из hibernate.properties
+            Configuration configuration = new Configuration();
 
+            // Регистрируем сущности
+            configuration.addAnnotatedClass(Writer.class);
+            configuration.addAnnotatedClass(Post.class);
+            configuration.addAnnotatedClass(Label.class);
+
+            // Билдим SessionFactory
+            sessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
@@ -42,7 +44,7 @@ public class DatabaseManager {
     public static boolean isDatabaseAvailable() {
         try (Session session = sessionFactory.openSession()) {
             // Простой запрос для проверки соединения
-            session.createQuery("SELECT 1", Integer.class).getSingleResult();
+            session.createNativeQuery("SELECT 1", Integer.class).getSingleResult();
             return true;
         } catch (Exception e) {
             return false;
